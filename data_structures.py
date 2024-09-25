@@ -9,16 +9,14 @@ class Stack:
         self.items.append(item)
 
     def pop(self):
-        if not self.is_empty():
-            return self.items.pop()
-        else:
+        if self.is_empty():
             raise IndexError("Pop from an empty stack")
+        return self.items.pop()            
 
     def peek(self):
-        if not self.is_empty():
-            return self.items[-1]
-        else:
+        if self.is_empty():
             raise IndexError("Peek from an empty stack")
+        return self.items[-1]            
 
     def size(self):
         return len(self.items)
@@ -43,18 +41,16 @@ class CircularStack:
             self.size += 1
             
     def pop(self):
-        if self.size > 0:
-            self.size -= 1
-            self.index = (self.index-1)%self.capacity
-            return self.buffer[self.index]   
-        else:
+        if self.is_empty():
             raise IndexError("Pop from an empty stack")
+        self.size -= 1
+        self.index = (self.index-1)%self.capacity
+        return self.buffer[self.index]        
             
     def peek(self):
-        if self.size > 0:
-            return self.buffer[(self.index-1)%self.capacity]
-        else:
+        if self.is_empty():
             raise IndexError("Peek from an empty stack")
+        return self.buffer[(self.index-1)%self.capacity]            
         
     def __str__(self):
         content = "["
@@ -65,3 +61,27 @@ class CircularStack:
         content += "]"
         return content
     
+class Queue:
+    def __init__(self):
+        self.buffer = []
+        
+    def enqueue(self, item):
+        self.buffer.append(item)
+    
+    def dequeue(self):
+        if self.is_empty(): 
+            raise IndexError("Dequeue from an empty queue")
+        item = self.buffer[0]
+        self.buffer.pop(0)
+        return item
+            
+    
+    def size(self):
+        return len(self.buffer)
+    
+    def next(self):
+        return self.buffer[0]
+    
+    def is_empty(self):
+        return len(self.buffer) == 0
+
