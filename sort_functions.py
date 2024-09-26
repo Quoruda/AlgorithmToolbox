@@ -29,8 +29,13 @@ def insertion_sort(arr):
         arr[j + 1] = key
         
 def counting_sort(arr:[int]):
-    vMax = max(arr)
-    vMin = min(arr)
+    vMax = arr[0]
+    vMin = arr[0]
+    for e in arr:
+        if e > vMax:
+            vMax = e
+        elif e < vMin:
+            vMin = e
     d = vMax-vMin
     countingArr = [0 for _ in range(d+1)]
     for e in arr:
