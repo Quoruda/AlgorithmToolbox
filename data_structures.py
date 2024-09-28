@@ -85,3 +85,69 @@ class Queue:
     def is_empty(self):
         return len(self.buffer) == 0
 
+class Chain:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+class ChainList:
+    def __init__(self):
+        self.start = None
+        self.size = 0
+    
+    def append(self, value):
+        if self.size == 0:
+            self.start = Chain(value)
+        else:
+            current = self.start
+            while current.next is not None:
+                current = current.next
+            current.next = Chain(value)
+        self.size += 1
+        
+    def pop(self, index=0):
+        if index >= self.size or index < 0:
+            raise IndexError("Index out of range")
+        if index == 0:
+            value = self.start.value
+            self.start = self.start.next
+        else:
+            current = self.start
+            for i in range(index-1):
+                current = current.next
+            value = current.next.value
+            current.next = current.next.next
+        self.size -= 1
+        return value
+    
+    def get(self, index):
+        if index >= self.size or index < 0:
+            raise IndexError("Index out of range")
+        current = self.start
+        for i in range(index):
+            current = current.next
+        return current.value
+        
+    def is_empty(self):
+        return self.size == 0
+
+    def get_size(self):
+        return self.size
+    
+    def __str__(self):
+        content = "["
+        current = self.start
+        while current is not None:
+            if current != self.start:
+                content += ','
+            content += str(current.value)
+            current = current.next
+        content += "]"
+        return content
+    
+    
+    
+
+
+    
+        
