@@ -85,24 +85,24 @@ class Queue:
     def is_empty(self):
         return len(self.buffer) == 0
 
-class Chain:
+class Link:
     def __init__(self, value):
         self.value = value
         self.next = None
 
-class ChainList:
+class LinkedList:
     def __init__(self):
         self.start = None
         self.size = 0
     
     def append(self, value):
         if self.size == 0:
-            self.start = Chain(value)
+            self.start = Link(value)
         else:
             current = self.start
             while current.next is not None:
                 current = current.next
-            current.next = Chain(value)
+            current.next = Link(value)
         self.size += 1
         
     def pop(self, index=0):
@@ -145,9 +145,84 @@ class ChainList:
         content += "]"
         return content
     
-    
-    
-
-
-    
+class DoubleLink:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+        self.prev = None
         
+class DoubleLinkedList:
+    def __init__(self):
+        self.start = None
+        self.end = None
+        self.size = 0
+    
+    def append(self, value):
+        if self.size == 0:
+            self.start = DoubleLink(value)
+            self.end = self.start
+        else:
+            new_link = DoubleLink(value)
+            new_link.prev = self.end
+            self.end.next = new_link
+            self.end = new_link
+        self.size += 1
+        
+    def pop(self, index=0):
+        if index >= self.size or index < 0:
+            raise IndexError("Index out of range")
+        if index == 0:
+            value = self.start.value
+            self.start = self.start.next
+            if self.start is not None:
+                self.start.prev = None
+            else:
+                self.end = None
+        elif index == self.size-1:
+            value = self.end.value
+            self.end = self.end.prev
+            self.end.next = None
+        else:
+            if(index > self.size//2):
+                current = self.end
+                for i in range(self.size-1, index, -1):
+                    current = current.prev
+            else:          
+                current = self.start
+                for i in range(index-1):
+                    current = current.next
+            value = current.next.value
+            current.next = current.next.next
+            current.next.prev = current
+        self.size -= 1
+        return value
+    
+    def get(self, index):
+        if index >= self.size or index < 0:
+            raise IndexError("Index out of range")
+        if(index > self.size//2):
+            current = self.end
+            for i in range(self.size-1, index, -1):
+                current = current.prev
+        else:
+            current = self.start
+            for i in range(index):
+                current = current.next
+        return current.value
+        
+    def is_empty(self):
+        return self.size == 0
+
+    def get_size(self):
+        return self.size
+    
+    def __str__(self):
+        content = "["
+        current = self.start
+        while current is not None:
+            if current != self.start:
+                content += ','
+            content += str(current.value)
+            current = current.next
+        content += "]"
+        return content
