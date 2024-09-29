@@ -145,6 +145,32 @@ class LinkedList:
         content += "]"
         return content
     
+    def index_of(self, value):
+        current = self.start
+        index = 0
+        while current is not None:
+            if current.value == value:
+                return index
+            current = current.next
+            index += 1
+        return -1
+    
+    def insert(self, index, value):
+        if index > self.size or index < 0:
+            raise IndexError("Index out of range")
+        if index == 0:
+            new_link = Link(value)
+            new_link.next = self.start
+            self.start = new_link
+        else:
+            current = self.start
+            for i in range(index-1):
+                current = current.next
+            new_link = Link(value)
+            new_link.next = current.next
+            current.next = new_link
+        self.size += 1
+    
 class DoubleLink:
     def __init__(self, value):
         self.value = value
@@ -185,7 +211,7 @@ class DoubleLinkedList:
         else:
             if(index > self.size//2):
                 current = self.end
-                for i in range(self.size-1, index, -1):
+                for i in range(self.size-1, index-1, -1):
                     current = current.prev
             else:          
                 current = self.start
@@ -226,3 +252,43 @@ class DoubleLinkedList:
             current = current.next
         content += "]"
         return content
+    
+    def index_of(self, value):
+        current = self.start
+        index = 0
+        while current is not None:
+            if current.value == value:
+                return index
+            current = current.next
+            index += 1
+        return -1
+    
+    def insert(self, index, value):
+        if index > self.size or index < 0:
+            raise IndexError("Index out of range")
+        new_link = DoubleLink(value)
+        if self.size == 0:
+            self.end = new_link
+            self.start = new_link
+        elif index == 0:
+            new_link.next = self.start
+            self.start.prev = new_link
+            self.start = new_link
+        elif index == self.size:
+            new_link.prev = self.end
+            self.end.next = new_link
+            self.end = new_link
+        else:
+            if(index > self.size//2):
+                current = self.end
+                for i in range(self.size-1, index-1, -1):
+                    current = current.prev
+            else:
+                current = self.start
+                for i in range(index-1):
+                    current = current.next
+            new_link.next = current.next
+            new_link.prev = current
+            current.next.prev = new_link
+            current.next = new_link
+        self.size += 1
