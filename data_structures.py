@@ -2,23 +2,23 @@ class Stack:
     def __init__(self):
         self.items = []
 
-    def is_empty(self):
+    def is_empty(self) -> bool:
         return len(self.items) == 0
 
-    def push(self, item):
+    def push(self, item) -> None:
         self.items.append(item)
 
-    def pop(self):
+    def pop(self) -> object:
         if self.is_empty():
             raise IndexError("Pop from an empty stack")
         return self.items.pop()            
 
-    def peek(self):
+    def peek(self) -> object:
         if self.is_empty():
             raise IndexError("Peek from an empty stack")
         return self.items[-1]            
 
-    def size(self):
+    def size(self) -> int:
         return len(self.items)
     
 class CircularStack:
@@ -28,31 +28,31 @@ class CircularStack:
         self.index = 0
         self.size = 0
         
-    def is_empty(self):
+    def is_empty(self) -> bool:
         return self.size == 0
     
-    def is_full(self):
+    def is_full(self) -> bool:
         return self.size == self.capacity
     
-    def push(self, item):
+    def push(self, item) -> None:
         self.buffer[self.index] = item
         self.index = (self.index+1)%self.capacity
         if(self.size < self.capacity):
             self.size += 1
             
-    def pop(self):
+    def pop(self) -> object:
         if self.is_empty():
             raise IndexError("Pop from an empty stack")
         self.size -= 1
         self.index = (self.index-1)%self.capacity
         return self.buffer[self.index]        
             
-    def peek(self):
+    def peek(self) -> object:
         if self.is_empty():
             raise IndexError("Peek from an empty stack")
         return self.buffer[(self.index-1)%self.capacity]            
         
-    def __str__(self):
+    def __str__(self) -> str:
         content = "["
         for i in range(self.size):
             if i != 0:
@@ -65,10 +65,10 @@ class Queue:
     def __init__(self):
         self.buffer = []
         
-    def enqueue(self, item):
+    def enqueue(self, item) -> None:
         self.buffer.append(item)
     
-    def dequeue(self):
+    def dequeue(self) -> object:
         if self.is_empty(): 
             raise IndexError("Dequeue from an empty queue")
         item = self.buffer[0]
@@ -76,13 +76,13 @@ class Queue:
         return item
             
     
-    def size(self):
+    def size(self) -> int:
         return len(self.buffer)
     
-    def next(self):
+    def next(self) -> object:
         return self.buffer[0]
     
-    def is_empty(self):
+    def is_empty(self) -> bool:
         return len(self.buffer) == 0
 
 class Link:
@@ -95,7 +95,7 @@ class LinkedList:
         self.start = None
         self.size = 0
     
-    def append(self, value):
+    def append(self, value) -> None:
         if self.size == 0:
             self.start = Link(value)
         else:
@@ -105,7 +105,7 @@ class LinkedList:
             current.next = Link(value)
         self.size += 1
         
-    def pop(self, index=0):
+    def pop(self, index=0) -> object:
         if index >= self.size or index < 0:
             raise IndexError("Index out of range")
         if index == 0:
@@ -120,7 +120,7 @@ class LinkedList:
         self.size -= 1
         return value
     
-    def get(self, index):
+    def get(self, index) -> object:
         if index >= self.size or index < 0:
             raise IndexError("Index out of range")
         current = self.start
@@ -128,13 +128,13 @@ class LinkedList:
             current = current.next
         return current.value
         
-    def is_empty(self):
+    def is_empty(self) -> bool:
         return self.size == 0
 
-    def get_size(self):
+    def get_size(self) -> int:
         return self.size
     
-    def __str__(self):
+    def __str__(self) -> str:
         content = "["
         current = self.start
         while current is not None:
@@ -144,8 +144,8 @@ class LinkedList:
             current = current.next
         content += "]"
         return content
-    
-    def index_of(self, value):
+     
+    def index_of(self, value) -> int:
         current = self.start
         index = 0
         while current is not None:
@@ -155,7 +155,7 @@ class LinkedList:
             index += 1
         return -1
     
-    def insert(self, index, value):
+    def insert(self, index, value) -> None:
         if index > self.size or index < 0:
             raise IndexError("Index out of range")
         if index == 0:
@@ -183,7 +183,7 @@ class DoubleLinkedList:
         self.end = None
         self.size = 0
     
-    def append(self, value):
+    def append(self, value) -> None:
         if self.size == 0:
             self.start = DoubleLink(value)
             self.end = self.start
@@ -194,7 +194,7 @@ class DoubleLinkedList:
             self.end = new_link
         self.size += 1
         
-    def pop(self, index=0):
+    def pop(self, index=0) -> object:
         if index >= self.size or index < 0:
             raise IndexError("Index out of range")
         if index == 0:
@@ -223,7 +223,7 @@ class DoubleLinkedList:
         self.size -= 1
         return value
     
-    def get(self, index):
+    def get(self, index) -> object:
         if index >= self.size or index < 0:
             raise IndexError("Index out of range")
         if(index > self.size//2):
@@ -236,13 +236,13 @@ class DoubleLinkedList:
                 current = current.next
         return current.value
         
-    def is_empty(self):
+    def is_empty(self) -> bool:
         return self.size == 0
 
-    def get_size(self):
+    def get_size(self) -> int:
         return self.size
     
-    def __str__(self):
+    def __str__(self) -> str:
         content = "["
         current = self.start
         while current is not None:
@@ -253,7 +253,7 @@ class DoubleLinkedList:
         content += "]"
         return content
     
-    def index_of(self, value):
+    def index_of(self, value) -> int:
         current = self.start
         index = 0
         while current is not None:
@@ -263,7 +263,7 @@ class DoubleLinkedList:
             index += 1
         return -1
     
-    def insert(self, index, value):
+    def insert(self, index, value) -> None:
         if index > self.size or index < 0:
             raise IndexError("Index out of range")
         new_link = DoubleLink(value)
