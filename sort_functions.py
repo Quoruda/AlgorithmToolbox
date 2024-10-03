@@ -45,3 +45,19 @@ def counting_sort(arr:[int]):
         for j in range(count):
             arr[iArr] = i+vMin
             iArr += 1
+
+
+def fusion(arr:[int], s, m, e):
+    pass
+
+def merge_sort(arr:[int], s, e):
+    if s == e:
+        return arr
+    m = (s+e)//2
+    merge_sort(arr, s, m)
+    merge_sort(arr, m+1, e)
+    return fusion(arr, s, m, e)
+
+list1 = [64, 34, 25, 12, 22, 11, 90]
+merge_sort(list1, 0, len(list1)-1)
+print(list1)
