@@ -1,3 +1,10 @@
+def is_sort(arr:[int]) -> bool:
+    n = len(arr)
+    for i in range(1, n):
+        if arr[i] < arr[i-1]:
+            return False
+    return True
+
 def selection_sort(arr):
     n = len(arr)
     for i in range(n):
@@ -74,11 +81,9 @@ def fusion(arr:[int], s, m, e):
 
 def merge_sort(arr:[int], s, e):
     global n
-    n += 1
     if s >= e:
         return arr
     m = (s+e)//2
     merge_sort(arr, s, m)
     merge_sort(arr, m+1, e)
     return fusion(arr, s, m, e)
-
