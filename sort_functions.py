@@ -48,16 +48,37 @@ def counting_sort(arr:[int]):
 
 
 def fusion(arr:[int], s, m, e):
-    pass
+    i = s
+    j = m+1
+    k = s
+    temp = [0 for _ in range(e+1)]
+    while i <= m and j <= e:
+        if arr[i] < arr[j]:
+            temp[k] = arr[i]
+            i += 1
+        else:
+            temp[k] = arr[j]
+            j += 1
+        k += 1
+    while i <= m:
+        temp[k] = arr[i]
+        i += 1
+        k += 1
+    while j <= e:
+        temp[k] = arr[j]
+        j += 1
+        k += 1
+    for i in range(s, e+1):
+        arr[i] = temp[i]
+    return arr
 
 def merge_sort(arr:[int], s, e):
-    if s == e:
+    global n
+    n += 1
+    if s >= e:
         return arr
     m = (s+e)//2
     merge_sort(arr, s, m)
     merge_sort(arr, m+1, e)
     return fusion(arr, s, m, e)
 
-list1 = [64, 34, 25, 12, 22, 11, 90]
-merge_sort(list1, 0, len(list1)-1)
-print(list1)
