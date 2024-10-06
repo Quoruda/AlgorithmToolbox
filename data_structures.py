@@ -292,3 +292,31 @@ class DoubleLinkedList:
             current.next.prev = new_link
             current.next = new_link
         self.size += 1
+
+class priorityQueue:
+    def __init__(self):
+        self.buffer = []
+        
+    def enqueue(self, item, priority) -> None:
+        self.buffer.append((item, priority))
+    
+    def dequeue(self) -> object:
+        if self.is_empty(): 
+            raise IndexError("Dequeue from an empty queue")
+        highest = 0
+        for i in range(1, len(self.buffer)):
+            if self.buffer[i][1] < self.buffer[highest][1]:
+                highest = i
+        item = self.buffer[highest]
+        self.buffer.pop(highest)
+        return item[0]
+            
+    
+    def size(self) -> int:
+        return len(self.buffer)
+    
+    def next(self) -> object:
+        return self.buffer[0][0]
+    
+    def is_empty(self) -> bool:
+        return len(self.buffer) == 0
