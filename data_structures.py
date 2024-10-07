@@ -293,7 +293,7 @@ class DoubleLinkedList:
             current.next = new_link
         self.size += 1
 
-class priorityQueue:
+class PriorityQueue:
     def __init__(self):
         self.buffer = []
         
@@ -320,3 +320,102 @@ class priorityQueue:
     
     def is_empty(self) -> bool:
         return len(self.buffer) == 0
+
+
+class PriorityQueue2:
+    def __init__(self):
+        self.prioritys = []
+        self.items = []
+        self.size = 0
+    
+    def enqueue(self, item, priority) -> None:
+        if self.size == 0:
+            self.prioritys.append(priority)
+            self.items.append(item)
+            self.size += 1
+            return
+        if priority >= self.prioritys[self.size-1]:
+            self.prioritys.append(priority)
+            self.items.append(item)
+            self.size += 1 
+        """
+        imin = 0
+        imax = self.size-1
+        while imin < imax:
+            imid = (imin+imax)//2
+            if self.prioritys[imid] == priority:
+                self.prioritys.insert(imid, priority)
+                self.items.insert(imid, item)
+                self.size += 1
+                return
+            elif self.prioritys[imid] < priority:
+                imin = imid+1
+            else:
+                imax = imid
+        """
+        for i in range(len(self.prioritys)):
+            if self.prioritys[i] > priority:
+                self.prioritys.insert(i, priority)
+                self.items.insert(i, item)
+                self.size += 1
+                return
+        
+          
+    
+    def is_empty(self) -> bool:
+        return self.size == 0
+
+    def dequeue(self) -> object:
+        if self.is_empty():
+            raise IndexError("Dequeue from an empty queue")
+        self.size -= 1
+        self.prioritys.pop()
+        return self.items.pop()
+
+    def __str__(self) -> str:
+        content = "["
+        for i, e in enumerate(self.items):
+            if i != 0:
+                content += ','
+            content += str(e)
+        content += "]"
+        return content
+
+
+import random
+import time
+
+n = 10000
+
+seed = random.randint(0, 1000)
+queue1 = PriorityQueue()
+random.seed(seed)
+start = time.time()
+for i in range(n):
+    e = random.randint(0, 1000)
+    queue1.enqueue(1000-e, e)
+end = time.time()
+print("Enqueue Time: ", end-start)
+start = time.time()
+for i in range(n):
+    queue1.dequeue()
+end = time.time()
+print("Dequeue Time: ", end-start)
+
+seed = random.randint(0, 1000)
+queue2 = PriorityQueue2()
+random.seed(seed)
+start = time.time()
+for i in range(n):
+    e = random.randint(0, 1000)
+    queue2.enqueue(1000-e, e)
+end = time.time()
+print("Enqueue Time: ", end-start)
+start = time.time()
+for i in range(n):
+    queue2.dequeue()
+end = time.time()
+print("Dequeue Time: ", end-start)
+
+
+        
