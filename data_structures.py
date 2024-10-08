@@ -295,35 +295,6 @@ class DoubleLinkedList:
 
 class PriorityQueue:
     def __init__(self):
-        self.buffer = []
-        
-    def enqueue(self, item, priority) -> None:
-        self.buffer.append((item, priority))
-    
-    def dequeue(self) -> object:
-        if self.is_empty(): 
-            raise IndexError("Dequeue from an empty queue")
-        highest = 0
-        for i in range(1, len(self.buffer)):
-            if self.buffer[i][1] < self.buffer[highest][1]:
-                highest = i
-        item = self.buffer[highest]
-        self.buffer.pop(highest)
-        return item[0]
-            
-    
-    def size(self) -> int:
-        return len(self.buffer)
-    
-    def next(self) -> object:
-        return self.buffer[0][0]
-    
-    def is_empty(self) -> bool:
-        return len(self.buffer) == 0
-
-
-class PriorityQueue2:
-    def __init__(self):
         self.prioritys = []
         self.items = []
         self.size = 0
@@ -335,33 +306,31 @@ class PriorityQueue2:
             self.size += 1
             return
         if priority >= self.prioritys[self.size-1]:
+        
             self.prioritys.append(priority)
             self.items.append(item)
-            self.size += 1 
-        """
+            self.size += 1
+            return
+        if priority < self.prioritys[0]:
+            self.prioritys.insert(0, priority)
+            self.items.insert(0, item)
+            self.size += 1
+            return
+        
         imin = 0
         imax = self.size-1
-        while imin < imax:
-            imid = (imin+imax)//2
-            if self.prioritys[imid] == priority:
-                self.prioritys.insert(imid, priority)
-                self.items.insert(imid, item)
-                self.size += 1
-                return
-            elif self.prioritys[imid] < priority:
-                imin = imid+1
+        imid = (imax+imin)//2
+        
+        while imax-imin > 1:
+            imid = (imax+imin)//2
+            if self.prioritys[imid] <= priority:
+                imin = imid
             else:
                 imax = imid
-        """
-        for i in range(len(self.prioritys)):
-            if self.prioritys[i] > priority:
-                self.prioritys.insert(i, priority)
-                self.items.insert(i, item)
-                self.size += 1
-                return
-        
-          
-    
+        self.prioritys.insert(imax, priority)
+        self.items.insert(imax, item)
+        self.size += 1
+
     def is_empty(self) -> bool:
         return self.size == 0
 
@@ -381,41 +350,8 @@ class PriorityQueue2:
         content += "]"
         return content
 
-
-import random
-import time
-
-n = 10000
-
-seed = random.randint(0, 1000)
-queue1 = PriorityQueue()
-random.seed(seed)
-start = time.time()
-for i in range(n):
-    e = random.randint(0, 1000)
-    queue1.enqueue(1000-e, e)
-end = time.time()
-print("Enqueue Time: ", end-start)
-start = time.time()
-for i in range(n):
-    queue1.dequeue()
-end = time.time()
-print("Dequeue Time: ", end-start)
-
-seed = random.randint(0, 1000)
-queue2 = PriorityQueue2()
-random.seed(seed)
-start = time.time()
-for i in range(n):
-    e = random.randint(0, 1000)
-    queue2.enqueue(1000-e, e)
-end = time.time()
-print("Enqueue Time: ", end-start)
-start = time.time()
-for i in range(n):
-    queue2.dequeue()
-end = time.time()
-print("Dequeue Time: ", end-start)
+    def get_size(self) -> int:
+        return self.size
 
 
-        
+
