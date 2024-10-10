@@ -27,6 +27,8 @@ def dijkstra(graph, source):
 def shortest_path(graph, source:int, dest:int):
     n_nodes = len(graph)
     routing_table = dijkstra(graph, source)
+    if routing_table[dest][0] == float("infinity"):
+        return []
     point = dest
     path = [dest]
     while point != source:
