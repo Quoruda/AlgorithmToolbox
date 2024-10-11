@@ -44,3 +44,16 @@ def minimax(node, depth, maximizingPlayer):
                 value = evaluation
                 best = child
     return Pair(best, value)
+
+def negamax(node, depth, color):
+    if depth == 0 or node.is_terminal():
+        return Pair(None, color*node.evaluate())
+    value = float("-inf")
+    best = None
+    for child in node.children():
+        p = negamax(child, depth-1, -color)
+        evaluation = -p.evaluation
+        if evaluation > value:
+            value = evaluation
+            best = child
+    return Pair(best, value)
