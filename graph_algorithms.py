@@ -40,19 +40,3 @@ def shortest_path(graph, source:int, dest:int):
 def shortest_distance(graph, source:int, dest:int):
     routing_table = dijkstra(graph, source)
     return routing_table[dest][1]
-
-graph = [
-    #a,b,c,d,e,f,g
-    [0,4,1,2,0,0,0],
-    [4,0,0,1,2,1,0],
-    [1,0,0,0,6,0,0],
-    [2,1,0,0,0,3,0],
-    [0,2,6,0,0,0,2],
-    [0,1,0,3,0,0,3],
-    [0,0,0,0,2,3,0]
-]
-
-
-if __name__ == "__main__":
-    print(shortest_path(graph, 0,6))
-    print(shortest_distance(graph, 0,6))
