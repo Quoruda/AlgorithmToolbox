@@ -57,3 +57,19 @@ def negamax(node, depth, color):
             value = evaluation
             best = child
     return Pair(best, value)
+
+def alphabeta(node, depth, alpha, beta, color):
+    if depth == 0 or node.is_terminal():
+        return Pair(None, color*node.evaluate())
+    value = float("-inf")
+    best = None
+    for child in node.children():
+        p = alphabeta(child, depth-1, -beta, -alpha, -color)
+        evaluation = -p.evaluation
+        if evaluation > value:
+            value = evaluation
+            best = child
+        alpha = max(alpha, evaluation)
+        if alpha >= beta:
+            break
+    return Pair(best, value)
