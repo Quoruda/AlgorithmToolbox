@@ -22,7 +22,7 @@ class Pair:
     node: Node
     evaluation: float
 
-def minimax(node, depth, maximizingPlayer):
+def minimax(node: Node, depth: int, maximizingPlayer: bool) -> Pair:
     if depth == 0 or node.is_terminal():
         return Pair(None, node.evaluate())
     value = None
@@ -45,7 +45,7 @@ def minimax(node, depth, maximizingPlayer):
                 best = child
     return Pair(best, value)
 
-def negamax(node, depth, color):
+def negamax(node: Node, depth: int, color: int) -> Pair:
     if depth == 0 or node.is_terminal():
         return Pair(None, color*node.evaluate())
     value = float("-inf")
@@ -58,7 +58,9 @@ def negamax(node, depth, color):
             best = child
     return Pair(best, value)
 
-def alphabeta(node, depth, alpha, beta, color):
+
+
+def alphabeta(node:Node, depth: int, alpha: int, beta:int, color:int) -> Pair:
     if depth == 0 or node.is_terminal():
         return Pair(None, color*node.evaluate())
     value = float("-inf")
@@ -73,3 +75,4 @@ def alphabeta(node, depth, alpha, beta, color):
         if alpha >= beta:
             break
     return Pair(best, value)
+
