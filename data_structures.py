@@ -94,6 +94,7 @@ class LinkedList:
     def __init__(self):
         self.start = None
         self.size = 0
+        
     
     def append(self, value) -> None:
         if self.size == 0:
@@ -120,13 +121,16 @@ class LinkedList:
         self.size -= 1
         return value
     
-    def get(self, index) -> object:
+    def getLink(self, index):
         if index >= self.size or index < 0:
             raise IndexError("Index out of range")
         current = self.start
         for i in range(index):
             current = current.next
-        return current.value
+        return current
+    
+    def get(self, index) -> object:
+        return self.getLink(index).value
         
     def is_empty(self) -> bool:
         return self.size == 0
@@ -352,6 +356,3 @@ class PriorityQueue:
 
     def get_size(self) -> int:
         return self.size
-
-
-
